@@ -4,6 +4,7 @@ import Icon from '../atoms/Icons';
 import useThemeColors from '../../hooks/useThemeColors';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserName, setUserName} from '../../redux/slice/userNameSlice';
+import {selectUserEmail, setUserEmail} from '../../redux/slice/userEmailSlice';
 import {navigate} from '../../utils/navigationUtils';
 import PrimaryText from '../atoms/PrimaryText';
 import useSettings from '../../screens/SettingsScreen/useSettings';
@@ -19,9 +20,11 @@ const HeaderContainer: React.FC<HeaderContainerProps> = ({headerText}) => {
   const colors = useThemeColors();
   const dispatch = useDispatch();
   const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
   const userId = useSelector(selectUserId);
   const { handleNameModalClose} = useSettings();
   const [name, setName] = useState(userName);
+  const [email, setEmail] = useState(userEmail);
   const [isNameModalVisible, setIsNameModalVisible] = useState(false);
 
   const handleProfileClick = () => {
@@ -32,11 +35,13 @@ const HeaderContainer: React.FC<HeaderContainerProps> = ({headerText}) => {
     try {
       await updateUserById(Realm.BSON.ObjectID.createFromHexString(userId), {
         username: name,
+        email: email,
       });
       dispatch(setUserName(name));
+      dispatch(setUserEmail(email));
       setIsNameModalVisible(false);
     } catch (error) {
-      console.error('Error updating the name:', error);
+      console.error('Error updating the name/email:', error);
     }
   };
 
@@ -85,6 +90,8 @@ const HeaderContainer: React.FC<HeaderContainerProps> = ({headerText}) => {
         handleNameModalClose={handleNameModalClose}
         name={name}
         setName={setName}
+        email={email}
+        setEmail={setEmail}
         handleNameUpdate={handleNameUpdate}
       />
     </>

@@ -12,6 +12,12 @@ export const nameSchema = z
     message: 'Name cannot exceed 50 characters.',
   });
 
+export const emailSchema = z
+  .string()
+  .refine(value => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value), {
+    message: 'Please enter a valid email address.',
+  });
+
 export const expenseSchema = z
   .string()
   .min(1, 'Expense must be at least 1 character long.')

@@ -34,6 +34,8 @@ const SettingsScreen = () => {
     setIsNameModalVisible,
     name,
     setName,
+    email,
+    setEmail,
     searchText,
     isCurrencyModalVisible,
     setIsCurrencyModalVisible,
@@ -51,10 +53,10 @@ const SettingsScreen = () => {
     selectedCurrency,
     selectedTheme,
     userName,
+    userEmail,
     currencySymbol,
     currencyName,
     handleRateNow,
-    handleGithub,
     handlePrivacyPolicy,
     handleDeleteAllData,
     isDeleteModalVisible,
@@ -75,8 +77,6 @@ const SettingsScreen = () => {
 
   const exportRealmData = async allData => {
     try {
-      console.log(allData);
-
       const storagePermissionGranted = await requestStoragePermission();
 
       if (!storagePermissionGranted) {
@@ -91,7 +91,6 @@ const SettingsScreen = () => {
         null,
         2,
       );
-      console.log(jsonData);
       const path = `${RNFS.DownloadDirectoryPath}/monyfy${currentDateAndTime}.json`;
 
       RNFS.writeFile(path, jsonData, 'utf8')
@@ -148,7 +147,7 @@ const SettingsScreen = () => {
               />
             </TouchableOpacity>
           </View>
-          <PrimaryText style={{fontSize: 25}}>monyfy</PrimaryText>
+          <PrimaryText style={{fontSize: 25}}>MonyFy</PrimaryText>
         </View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -186,6 +185,17 @@ const SettingsScreen = () => {
               ]}>
               <PrimaryText>Change Name</PrimaryText>
               <PrimaryText>{userName}</PrimaryText>
+            </View>
+            <View
+              style={[
+                styles.individualSettingsContainer,
+                {
+                  backgroundColor: colors.containerColor,
+                  borderColor: colors.secondaryText,
+                },
+              ]}>
+              <PrimaryText>Change Email</PrimaryText>
+              <PrimaryText>{userEmail}</PrimaryText>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setIsCurrencyModalVisible(true)}>
@@ -252,7 +262,7 @@ const SettingsScreen = () => {
               ]}>
               <PrimaryText>Delete all data</PrimaryText>
               <PrimaryText style={{fontSize: 11}}>
-                All data associated with monyfy will be deleted
+                All data associated with MonyFy will be deleted
               </PrimaryText>
             </View>
           </TouchableOpacity>
@@ -286,23 +296,6 @@ const SettingsScreen = () => {
               </PrimaryText>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleGithub}>
-            <View
-              style={[
-                styles.individualSettingsContainer,
-                {
-                  borderColor: colors.secondaryText,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                },
-              ]}>
-              <PrimaryText>Github</PrimaryText>
-              <PrimaryText style={{fontSize: 11}}>
-                Explore the Source Code
-              </PrimaryText>
-            </View>
-          </TouchableOpacity>
           <TouchableOpacity onPress={handlePrivacyPolicy}>
             <View
               style={[
@@ -316,7 +309,7 @@ const SettingsScreen = () => {
               ]}>
               <PrimaryText>Privacy Policy</PrimaryText>
               <PrimaryText style={{fontSize: 11}}>
-                Your Data, Your Device: zero Servers, zero Access.
+                Your Data, Your Device: MonyFy Servers, MonyFy Access.
               </PrimaryText>
             </View>
           </TouchableOpacity>
@@ -346,7 +339,7 @@ const SettingsScreen = () => {
             textAlign: 'center',
             marginTop: 15,
           }}>
-          Embrace the simplicity of monyfy
+          Embrace the simplicity of MonyFy
         </PrimaryText>
         <PrimaryText
           style={{
@@ -390,6 +383,8 @@ const SettingsScreen = () => {
         handleNameModalClose={handleNameModalClose}
         name={name}
         setName={setName}
+        email={email}
+        setEmail={setEmail}
         handleNameUpdate={handleNameUpdate}
       />
 

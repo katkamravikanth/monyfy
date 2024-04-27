@@ -43,8 +43,6 @@ const useExistingUser = () => {
   const [isStorageModalVisible, setIsStorageModalVisible] = useState(false);
   const debtorsCopy = allDebtors;
 
-  console.log('lklklkla', debtorsCopy);
-
   function normalizePath(path: string | undefined) {
     try {
       if (path === undefined) {
@@ -83,7 +81,6 @@ const useExistingUser = () => {
         throw console.error('undefined');
       }
 
-      console.log(res);
       const fileContent = await RNFS.readFile(path, 'utf8');
 
       const jsonData = JSON.parse(fileContent);

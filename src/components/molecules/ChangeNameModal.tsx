@@ -3,7 +3,7 @@ import React from 'react';
 import PrimaryText from '../atoms/PrimaryText';
 import CustomInput from '../atoms/CustomInput';
 import PrimaryButton from '../atoms/PrimaryButton';
-import { nameSchema } from '../../utils/validationSchema';
+import { nameSchema, emailSchema } from '../../utils/validationSchema';
 
 const ChangeNameModal = ({
   colors,
@@ -11,6 +11,8 @@ const ChangeNameModal = ({
   handleNameModalClose,
   name,
   setName,
+  email,
+  setEmail,
   handleNameUpdate,
 }) => {
   return (
@@ -38,6 +40,13 @@ const ChangeNameModal = ({
               setInput={setName}
               placeholder={'change user name'}
               schema={nameSchema}
+            />
+            <CustomInput
+              colors={colors}
+              input={email}
+              setInput={setEmail}
+              placeholder={'change user email'}
+              schema={emailSchema}
             />
           </View>
           <PrimaryButton

@@ -15,7 +15,8 @@ const config = {
   },
   resolver: {
     assetExts: assetExts.filter((ext) => ext !== "svg"),
-    sourceExts: [...sourceExts, "svg"]
+    sourceExts: [...sourceExts, "svg"],
+    watchFolders: [path.resolve(__dirname, '../../')]
   }
 };
 

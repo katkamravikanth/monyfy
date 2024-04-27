@@ -1,5 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserName, setUserName} from '../../redux/slice/userNameSlice';
+import {selectUserEmail, setUserEmail} from '../../redux/slice/userEmailSlice';
 import {selectUserId} from '../../redux/slice/userIdSlice';
 import {
   selectCurrencyCode,
@@ -26,6 +27,7 @@ import {getAllDataRequest, selectAllData} from '../../redux/slice/allDataSlice';
 
 const useSettings = () => {
   const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
   const userId = useSelector(selectUserId);
   const currencyId = useSelector(selectCurrencyId);
   const currencyCode = useSelector(selectCurrencyCode);
@@ -50,6 +52,7 @@ const useSettings = () => {
   const [isDownloadError, setIsDownloadError] = useState(false);
 
   const [name, setName] = useState(userName);
+  const [email, setEmail] = useState(userEmail);
   const [searchText, setSearchText] = useState('');
   const [isCurrencyModalVisible, setIsCurrencyModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(currencyData);
@@ -114,11 +117,13 @@ const useSettings = () => {
     try {
       await updateUserById(Realm.BSON.ObjectID.createFromHexString(userId), {
         username: name,
+        email: email
       });
       dispatch(setUserName(name));
+      dispatch(setUserEmail(email));
       setIsNameModalVisible(false);
     } catch (error) {
-      console.error('Error updating the name:', error);
+      console.error('Error updating the name/email:', error);
     }
   };
 
@@ -165,13 +170,6 @@ const useSettings = () => {
     console.log('rate on playstore');
   };
 
-  const handleGithub = () => {
-    const githubRepoURL = 'https://github.com/katkamravikanth/monyfy';
-    Linking.openURL(githubRepoURL).catch(err =>
-      console.error('Error opening GitHub:', err),
-    );
-  };
-
   const handlePrivacyPolicy = () => {
     const privacyPolicyURL =
       'https://github.com/katkamravikanth/monyfy/blob/master/PRIVACYPOLICY.md';
@@ -215,6 +213,8 @@ const useSettings = () => {
     setIsNameModalVisible,
     name,
     setName,
+    email,
+    setEmail,
     searchText,
     setSearchText,
     isCurrencyModalVisible,
@@ -234,10 +234,10 @@ const useSettings = () => {
     selectedCurrency,
     selectedTheme,
     userName,
+    userEmail,
     currencySymbol,
     currencyName,
     handleRateNow,
-    handleGithub,
     handlePrivacyPolicy,
     handleDeleteAllData,
     isDeleteModalVisible,
